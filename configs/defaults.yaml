@@ -1,0 +1,5 @@
+seed: 13
+batch_size: 64
+embedding_dim: 768
+cache_dir: .cache
+log_level: INFO
