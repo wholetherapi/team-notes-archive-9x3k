@@ -11,11 +11,8 @@ file.
 
 - **pipelines/ingest_transforms.py:10** — trim empty batches before the embedding stage
 - **pipelines/ingest_transforms.py:21** — coalesce adjacent chunks before embedding
-- **scripts/eval_sweep.py:11** — cap grid search parallelism at the scheduler limit
-- **scripts/eval_sweep.py:22** — write a manifest of evaluated shards after each fold (@milo)
-- **toolkit/scheduling.py:11** — cap the worker pool at the number of CPU cores
-- **toolkit/scheduling.py:22** — cache the tokenizer maps across sweeps (@alina)
-- **toolkit/scheduling.py:35** — drop completed shards from the in-memory queue promptly (@alina)
+- **scripts/eval_sweep.py:23** — write a manifest of evaluated shards after each fold (@milo)
+- **toolkit/scheduling.py:39** — drop completed shards from the in-memory queue promptly (@alina)
 - **toolkit/storage.py:11** — verify checksums before promoting a snapshot
 
 ## Ownership Rotation
