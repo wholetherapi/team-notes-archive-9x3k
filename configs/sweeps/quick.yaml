@@ -1,0 +1,5 @@
+grid:
+  learning_rate: [1e-4, 2e-4]
+  warmup_steps: [500, 1000]
+folds: 3
+max_parallel: 1
