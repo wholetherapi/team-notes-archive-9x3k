@@ -6,15 +6,16 @@ from pathlib import Path
 
 from toolkit.scheduling import run_in_pool
 
+MAX_PARALLEL = 4
+
 
 def expand_grid(grid: dict) -> list:
-    # TODO: cap grid search parallelism at the scheduler limit
     keys = sorted(grid)
     return [dict(zip(keys, values)) for values in itertools.product(*[grid[k] for k in keys])]
 
 
 def evaluate_manifest(configs: list, evaluator) -> list:
-    return run_in_pool(evaluator, configs)
+    return run_in_pool(evaluator, configs, pool_size=MAX_PARALLEL)
 
 
 def write_manifest(path: str, folds: list) -> None:

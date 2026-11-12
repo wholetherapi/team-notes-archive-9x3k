@@ -6,10 +6,11 @@ from typing import Callable, Iterable, List
 
 _DEFAULT_LEASE_SECONDS = 30
 
+_TOKEN_MAPS = {}
+
 
 def default_pool_size() -> int:
-    # TODO: cap the worker pool at the number of CPU cores
-    return 2 * (os.cpu_count() or 1)
+    return max(1, int(os.cpu_count() or 1))
 
 
 def run_in_pool(fn: Callable, items: Iterable, pool_size: int = None) -> List:
@@ -19,9 +20,12 @@ def run_in_pool(fn: Callable, items: Iterable, pool_size: int = None) -> List:
 
 
 def load_vocab(path: str) -> dict:
-    # TODO(@alina): cache the tokenizer maps across sweeps
+    if path in _TOKEN_MAPS:
+        return _TOKEN_MAPS[path]
     with open(path, "r", encoding="utf-8") as handle:
-        return {line.strip(): idx for idx, line in enumerate(handle)}
+        mapping = {line.strip(): idx for idx, line in enumerate(handle)}
+    _TOKEN_MAPS[path] = mapping
+    return mapping
 
 
 def lease_loop(iterations: int):
